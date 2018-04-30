@@ -14,13 +14,13 @@ class SemesterTableSeeder extends Seeder
         //
         $semester = new \App\Models\Semester();
         $semester->id = 1;
-        $semester->type = 'ZIMOWY';
+        $semester->name = 'ZIMOWY';
         $semester->year = '2018/2019';
         $semester->save();
 
         $semester = new \App\Models\Semester();
         $semester->id = 2;
-        $semester->type = 'LETNI';
+        $semester->name = 'LETNI';
         $semester->year = '2018/2019';
         $semester->save();
 
