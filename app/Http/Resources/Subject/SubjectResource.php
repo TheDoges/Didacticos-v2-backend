@@ -14,9 +14,9 @@ class SubjectResource extends JsonResource
      */
     public function toArray($request)
     {
-        $field = $this->field();
-        $semester = $this->semester();
-        $degree = $field->degree();
+        $field = $this->field;
+        $semester = $this->semester;
+        $degree = $field->degree;
         return [
             'id' => $this->id,
             'name' => $this->name,

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Subject;
 
 use App\Http\Requests\Interfaces\IFormRequest;
+use App\Models\Subject;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
@@ -33,12 +34,7 @@ class SubjectRequest extends FormRequest implements IFormRequest
         $rules = [];
         switch($method) {
             case HTTPMethods::POST:
-                $rules['name'] = 'required';
-                $rules['type'] = 'required';
-                $rules['hours'] = 'required';
-                $rules['field_id'] = 'required';
-                $rules['semester_id'] = 'required';
-                $rules['semester_number'] = 'required';
+                $rules = Subject::STORE_RULES;
                 break;
             default:
                 break;

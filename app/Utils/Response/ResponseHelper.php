@@ -25,4 +25,15 @@ trait ResponseHelper
 
         ], $httpStatusCode);
     }
+
+    public function prepareLoginSuccessResponse($messages, $headers) {
+        return response($messages)->withHeaders($headers);
+    }
+
+    public function prepareJsonMessage($message, $data) {
+        return [
+            'message' => $message,
+            'data' => $data
+        ];
+    }
 }

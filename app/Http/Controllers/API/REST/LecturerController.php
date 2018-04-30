@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\REST;
 
-use App\Http\Requests\Subject\SubjectRequest;
-use App\Http\Resources\Subject\SubjectResource;
-use App\Models\Subject;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Lecturer\LecturerResource;
+use App\Models\Lecturer;
 use App\Utils\Controller\ControllerHelper;
-use App\Utils\Response\ResponseHelper;
 use App\Utils\Response\ResponseMessages;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SubjectController extends Controller
+class LecturerController extends Controller
 {
-    use ResponseHelper, ControllerHelper;
+    use ControllerHelper;
 
     public function __construct() {
         $this->middleware('auth:api');
@@ -27,7 +26,7 @@ class SubjectController extends Controller
     public function index()
     {
         //
-        return SubjectResource::collection(Subject::all());
+        return LecturerResource::collection(Lecturer::all());
     }
 
     /**
@@ -36,53 +35,53 @@ class SubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SubjectRequest $request)
+    public function store(LecturerRequest $request)
     {
         //
-        $subject = new Subject();
-        $subject->fill($request->validated());
-        $subject->save();
-        return $this->prepareJsonSuccessResponse(new SubjectResource($subject), Response::HTTP_OK);
+        $lecturer = new Lecturer();
+        $lecturer->fill($request->validated());
+        $lecturer->save();
+        return $this->prepareJsonSuccessResponse(new LecturerResource($lecturer), Response::HTTP_OK);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Subject  $subject
+     * @param  \App\Models\Lecturer  $lecturer
      * @return \Illuminate\Http\Response
      */
-    public function show(Subject $subject)
+    public function show(Lecturer $lecturer)
     {
         //
-        return new SubjectResource($subject);
+        return new LecturerResource($lecturer);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Subject  $subject
+     * @param  \App\Models\Lecturer  $lecturer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subject $subject)
+    public function update(Request $request, Lecturer $lecturer)
     {
         //
         unset($request['id']);
-        $isUpdated = $this->updateDataInModel($request->all(), $subject);
-        $message = $isUpdated ? new SubjectResource($subject) : ResponseMessages::NOTHING_TO_UPDATE;
+        $isUpdated = $this->updateDataInModel($request->all(), $lecturer);
+        $message = $isUpdated ? new LecturerResource($lecturer) : ResponseMessages::NOTHING_TO_UPDATE;
         return $this->prepareJsonSuccessResponse($message, Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Subject  $subject
+     * @param  \App\Models\Lecturer  $lecturer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subject $subject)
+    public function destroy(Lecturer $lecturer)
     {
         //
-        $subject->delete();
+        $lecturer->delete();
         return $this->prepareJsonSuccessResponse(ResponseMessages::OPERATION_SUCCESSFUL, Response::HTTP_OK);
     }
 
@@ -95,6 +94,8 @@ class SubjectController extends Controller
     public function storeAll(Request $request)
     {
         //
+        $response = $this->storeSelectedModels($request->all(), Lecturer::class);
+        return $this->prepareLoginSuccessResponse($response, ResponseMessages::OPERATION_SUCCESSFUL);
     }
 
     /**
@@ -106,5 +107,7 @@ class SubjectController extends Controller
     public function deleteAll(Request $request)
     {
         //
+        $response = $this->deleteSelectedModels($request->all(), Lecturer::class);
+        return $this->prepareLoginSuccessResponse($response, ResponseMessages::OPERATION_SUCCESSFUL);
     }
 }

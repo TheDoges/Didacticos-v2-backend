@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\REST;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Title\TitleRequest;
 use App\Http\Resources\Title\TitleResource;
 use App\Models\Title;
 use App\Utils\Controller\ControllerHelper;
-use App\Utils\Response\ResponseHelper;
 use App\Utils\Response\ResponseMessages;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TitleController extends Controller
 {
-    use ResponseHelper, ControllerHelper;
+    use ControllerHelper;
     public function __construct() {
         $this->middleware('auth:api');
     }
@@ -84,5 +84,31 @@ class TitleController extends Controller
         //
         $title->delete();
         return $this->prepareJsonSuccessResponse(ResponseMessages::OPERATION_SUCCESSFUL, Response::HTTP_OK);
+    }
+
+    /**
+     * Store all a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeAll(Request $request)
+    {
+        //
+        $response = $this->storeSelectedModels($request->all(), Title::class);
+        return $this->prepareLoginSuccessResponse($response, ResponseMessages::OPERATION_SUCCESSFUL);
+    }
+
+    /**
+     * Destroy all a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteAll(Request $request)
+    {
+        //
+        $response = $this->deleteSelectedModels($request->all(), Title::class);
+        return $this->prepareLoginSuccessResponse($response, ResponseMessages::OPERATION_SUCCESSFUL);
     }
 }

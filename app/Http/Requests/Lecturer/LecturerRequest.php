@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Lecturer;
 
 use App\Http\Requests\Interfaces\IFormRequest;
+use App\Models\Lecturer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
@@ -33,9 +34,7 @@ class LecturerRequest extends FormRequest implements IFormRequest
         $rules = [];
         switch($method) {
             case HTTPMethods::POST:
-                $rules['name'] = 'required';
-                $rules['surname'] = 'required';
-                $rules['title_id'] = 'required';
+                $rules = Lecturer::STORE_RULES;
                 break;
             default:
                 break;

@@ -19,7 +19,7 @@ class FieldResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'type' => $this->type,
-            'degree' => new DegreeResource($this->degree())
+            'degree' => new DegreeResource($this->degree)
         ];
     }
 }

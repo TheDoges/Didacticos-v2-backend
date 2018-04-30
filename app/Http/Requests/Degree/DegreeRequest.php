@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Degree;
 
 use App\Http\Requests\Interfaces\IFormRequest;
+use App\Models\Degree;
 use App\Utils\HTTP\HTTPMethods;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,10 +35,7 @@ class DegreeRequest extends FormRequest implements IFormRequest
         $rules = [];
         switch($method) {
             case HTTPMethods::POST:
-                $rules['name'] = 'required';
-                $rules['prefix'] = 'required';
-                $rules['alias'] = 'required';
-                $rules['number'] = 'required';
+                $rules = Degree::STORE_RULES;
                 break;
             default:
                 break;

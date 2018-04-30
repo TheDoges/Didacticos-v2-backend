@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\REST;
 
-use App\Http\Requests\Semester\SemesterRequest;
-use App\Http\Resources\Semester\SemesterResource;
-use App\Models\Semester;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Field\FieldRequest;
+use App\Http\Resources\Field\FieldResource;
+use App\Models\Degree;
+use App\Models\Field;
 use App\Utils\Controller\ControllerHelper;
-use App\Utils\Response\ResponseHelper;
 use App\Utils\Response\ResponseMessages;
 use Illuminate\Http\Request;
+use Validator;
 use Symfony\Component\HttpFoundation\Response;
 
-class SemesterController extends Controller
+class FieldController extends Controller
 {
-    use ResponseHelper, ControllerHelper;
+    use ControllerHelper;
 
     public function __construct() {
         $this->middleware('auth:api');
@@ -27,7 +29,7 @@ class SemesterController extends Controller
     public function index()
     {
         //
-        return SemesterResource::collection(Semester::all());
+        return FieldResource::collection(Field::all());
     }
 
     /**
@@ -36,53 +38,54 @@ class SemesterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SemesterRequest $request)
+    public function store(Degree $degree, FieldRequest $request)
     {
         //
-        $semester = new Semester();
-        $semester->fill($request->validated());
-        $semester->save();
-        return $this->prepareJsonSuccessResponse(new SemesterResource($semester), Response::HTTP_OK);
+        $field = new Field();
+        $field->fill($request->validated());
+        $field->degree_id = $degree->id;
+        $field->save();
+        return $this->prepareJsonSuccessResponse(new FieldResource($field), Response::HTTP_OK);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Semester  $semester
+     * @param  \App\Models\Field  $field
      * @return \Illuminate\Http\Response
      */
-    public function show(Semester $semester)
+    public function show(Degree $degree, Field $field)
     {
         //
-        return new SemesterResource($semester);
+        return new FieldResource($field);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Semester  $semester
+     * @param  \App\Models\Field  $field
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Semester $semester)
+    public function update(Degree $degree, Request $request, Field $field)
     {
         //
         unset($request['id']);
-        $isUpdated = $this->updateDataInModel($request->all(), $semester);
-        $message = $isUpdated ? new SemesterResource($semester) : ResponseMessages::NOTHING_TO_UPDATE;
+        $isUpdated = $this->updateDataInModel($request->all(), $field);
+        $message = $isUpdated ? new FieldResource($field) : ResponseMessages::NOTHING_TO_UPDATE;
         return $this->prepareJsonSuccessResponse($message, Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Semester  $semester
+     * @param  \App\Models\Field  $field
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Semester $semester)
+    public function destroy(Degree $degree, Field $field)
     {
         //
-        $semester->delete();
+        $field->delete();
         return $this->prepareJsonSuccessResponse(ResponseMessages::OPERATION_SUCCESSFUL, Response::HTTP_OK);
     }
 
@@ -95,6 +98,8 @@ class SemesterController extends Controller
     public function storeAll(Request $request)
     {
         //
+        $response = $this->storeSelectedModels($request->all(), Field::class);
+        return $this->prepareLoginSuccessResponse($response, ResponseMessages::OPERATION_SUCCESSFUL);
     }
 
     /**
@@ -106,5 +111,7 @@ class SemesterController extends Controller
     public function deleteAll(Request $request)
     {
         //
+        $response = $this->deleteSelectedModels($request->all(), Field::class);
+        return $this->prepareLoginSuccessResponse($response, ResponseMessages::OPERATION_SUCCESSFUL);
     }
 }

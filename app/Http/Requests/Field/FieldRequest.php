@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Field;
 
 use App\Http\Requests\Interfaces\IFormRequest;
+use App\Models\Field;
 use App\Utils\HTTP\HTTPMethods;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,8 +34,7 @@ class FieldRequest extends FormRequest implements IFormRequest
         $rules = [];
         switch($method) {
             case HTTPMethods::POST:
-                $rules['name'] = 'required';
-                $rules['type'] = 'required';
+                $rules = Field::STORE_RULES;
                 break;
             default:
                 break;

@@ -20,4 +20,25 @@ class Title extends Model
         'max_hours',
         'warning_percent'
         ];
+
+    const STORE_RULES = [
+        'name' => 'required',
+        'short_name' => 'required',
+        'lab_permission' => 'required',
+        'lec_permission' => 'required',
+        'exe_permission' => 'required',
+        'sem_permission' => 'required',
+        'pro_permission' => 'required',
+        'min_hours' => 'required',
+        'max_hours' => 'required',
+        'warning_percent' => 'required',
+    ];
+
+    const UPDATE_RULES = [
+        'id' => 'required'
+    ];
+
+    const DELETE_RULES = [
+        'id' => 'required'
+    ];
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Semester;
 
 use App\Http\Requests\Interfaces\sIFormRequest;
+use App\Models\Semester;
 use App\Utils\HTTP\HTTPMethods;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,8 +35,7 @@ class SemesterRequest extends FormRequest implements IFormRequest
         $rules = [];
         switch($method) {
             case HTTPMethods::POST:
-                $rules['name'] = 'required';
-                $rules['year'] = 'required';
+                $rules = Semester::STORE_RULES;
                 break;
             default:
                 break;
