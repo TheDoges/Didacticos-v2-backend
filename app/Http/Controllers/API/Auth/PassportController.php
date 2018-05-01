@@ -26,7 +26,7 @@ class PassportController extends Controller
         if(Auth::attempt(['email' => $request['email'], 'password' => $request['password']])){
             $user = Auth::user();
             $success['token'] =  'Bearer ' .$user->createToken('Didacticos_v2')->accessToken;
-            return $this->prepareLoginSuccessResponse($success, Response::HTTP_OK);
+            return $this->prepareJsonSuccessResponse($success, Response::HTTP_OK);
         } else{
             return $this->prepareJsonErrorResponse(ResponseMessages::UNAUTHORISED, Response::HTTP_UNAUTHORIZED);
         }
