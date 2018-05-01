@@ -38,12 +38,12 @@ class FieldController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Degree $degree, FieldRequest $request)
+    public function store(/*Degree $degree,*/ FieldRequest $request)
     {
         //
         $field = new Field();
         $field->fill($request->validated());
-        $field->degree_id = $degree->id;
+        //$field->degree_id = $degree->id;
         $field->save();
         return $this->prepareJsonSuccessResponse(new FieldResource($field), Response::HTTP_OK);
     }
@@ -54,7 +54,7 @@ class FieldController extends Controller
      * @param  \App\Models\Field  $field
      * @return \Illuminate\Http\Response
      */
-    public function show(Degree $degree, Field $field)
+    public function show(/*Degree $degree,*/ Field $field)
     {
         //
         return new FieldResource($field);
@@ -67,7 +67,7 @@ class FieldController extends Controller
      * @param  \App\Models\Field  $field
      * @return \Illuminate\Http\Response
      */
-    public function update(Degree $degree, Request $request, Field $field)
+    public function update(/*Degree $degree,*/ Request $request, Field $field)
     {
         //
         unset($request['id']);
@@ -82,7 +82,7 @@ class FieldController extends Controller
      * @param  \App\Models\Field  $field
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Degree $degree, Field $field)
+    public function destroy(/*Degree $degree,*/ Field $field)
     {
         //
         $field->delete();

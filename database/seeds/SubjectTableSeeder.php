@@ -20,6 +20,7 @@ class SubjectTableSeeder extends Seeder
         $subject->field_id = 3;
         $subject->semester_id = 1;
         $subject->semester_number = 1;
+        $subject->degree_id = 1;
         $subject->save();
 
         $subject = new \App\Models\Subject();
@@ -30,6 +31,7 @@ class SubjectTableSeeder extends Seeder
         $subject->field_id = 3;
         $subject->semester_id = 1;
         $subject->semester_number = 1;
+        $subject->degree_id = 1;
         $subject->save();
 
         $subject = new \App\Models\Subject();
@@ -40,6 +42,7 @@ class SubjectTableSeeder extends Seeder
         $subject->field_id = 4;
         $subject->semester_id = 1;
         $subject->semester_number = 1;
+        $subject->degree_id = 2;
         $subject->save();
 
         $subject = new \App\Models\Subject();
@@ -50,6 +53,7 @@ class SubjectTableSeeder extends Seeder
         $subject->field_id = 4;
         $subject->semester_id = 1;
         $subject->semester_number = 1;
+        $subject->degree_id = 2;
         $subject->save();
 
         $subject = new \App\Models\Subject();
@@ -60,6 +64,7 @@ class SubjectTableSeeder extends Seeder
         $subject->field_id = 3;
         $subject->semester_id = 1;
         $subject->semester_number = 1;
+        $subject->degree_id = 1;
         $subject->save();
 
         $subject = new \App\Models\Subject();
@@ -70,6 +75,7 @@ class SubjectTableSeeder extends Seeder
         $subject->field_id = 3;
         $subject->semester_id = 1;
         $subject->semester_number = 1;
+        $subject->degree_id = 1;
         $subject->save();
 
         $subject = new \App\Models\Subject();
@@ -80,6 +86,7 @@ class SubjectTableSeeder extends Seeder
         $subject->field_id = 4;
         $subject->semester_id = 1;
         $subject->semester_number = 1;
+        $subject->degree_id = 2;
         $subject->save();
 
         $subject = new \App\Models\Subject();
@@ -90,6 +97,7 @@ class SubjectTableSeeder extends Seeder
         $subject->field_id = 4;
         $subject->semester_id = 1;
         $subject->semester_number = 1;
+        $subject->degree_id = 2;
         $subject->save();
     }
 }

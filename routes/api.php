@@ -26,11 +26,15 @@ Route::post('/degrees', 'API\REST\DegreeController@storeAll')->name('degree.stor
 Route::delete('/degrees', 'API\REST\DegreeController@deleteAll')->name('degree.deleteAll');
 
 // *****************************FIELD**************************************
-Route::group(['prefix' => '/degree/{degree}'], function() {
-    Route::apiResource('/field', 'API\REST\FieldController');
-    Route::post('/fields', 'API\REST\FieldController@storeALl')->name('lecturer.storeALl');
-    Route::delete('/fields', 'API\REST\FieldController@deleteAll')->name('lecturer.deleteAll');
-});
+//Route::group(['prefix' => '/degree/{degree}'], function() {
+//    Route::apiResource('/field', 'API\REST\FieldController');
+//    Route::post('/fields', 'API\REST\FieldController@storeALl')->name('lecturer.storeALl');
+//    Route::delete('/fields', 'API\REST\FieldController@deleteAll')->name('lecturer.deleteAll');
+//});
+
+Route::apiResource('/field', 'API\REST\FieldController');
+Route::post('/fields', 'API\REST\FieldController@storeALl')->name('lecturer.storeALl');
+Route::delete('/fields', 'API\REST\FieldController@deleteAll')->name('lecturer.deleteAll');
 
 // *****************************LECTURER***********************************
 Route::apiResource('/lecturer', 'API\REST\LecturerController');

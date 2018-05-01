@@ -17,8 +17,8 @@ class CreateFieldsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('type');
-            $table->integer('degree_id')->unsigned()->index();
-            $table->foreign('degree_id')->references('id')->on('degrees')->onDelete('cascade');
+            //$table->integer('degree_id')->unsigned()->index();
+            //$table->foreign('degree_id')->references('id')->on('degrees')->onDelete('cascade');
             $table->timestamps();
         });
     }

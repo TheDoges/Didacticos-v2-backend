@@ -24,7 +24,7 @@ class SubjectResource extends JsonResource
             'hours' => $this->hours,
             'field' => new FieldResource($this->field),
             'semester' => new SemesterResource($this->semester),
-            'degree' => new DegreeResource($this->field->degree),
+            'degree' => new DegreeResource($this->degree),
             'semesterNumber' => $this->semester_number
         ];
     }

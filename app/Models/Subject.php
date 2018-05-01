@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Subject extends Model
 {
     //
-    protected $fillable = ['name', 'type', 'hours', 'field_id', 'semester_id', 'semester_number'];
+    protected $fillable = ['name', 'type', 'hours', 'field_id', 'semester_id', 'degree_id', 'semester_number'];
 
     const STORE_RULES = [
         'name' => 'required',
@@ -16,6 +16,7 @@ class Subject extends Model
         'field_id' => 'required',
         'semester_id' => 'required',
         'semester_number' => 'required',
+        'degree_id' => 'required'
     ];
 
     const UPDATE_RULES = [
@@ -32,5 +33,9 @@ class Subject extends Model
 
     public function semester() {
         return $this->belongsTo(Semester::class);
+    }
+
+    public function degree() {
+        return $this->belongsTo(Degree::class);
     }
 }

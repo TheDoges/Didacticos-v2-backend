@@ -24,6 +24,9 @@ class CreateSubjectsTable extends Migration
             $table->integer('semester_id')->unsigned()->index();
             $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('cascade');
 
+            $table->integer('degree_id')->unsigned()->index();
+            $table->foreign('degree_id')->references('id')->on('degrees')->onDelete('cascade');
+
             $table->integer('semester_number');
             $table->timestamps();
         });

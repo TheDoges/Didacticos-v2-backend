@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Field extends Model
 {
     //
-    protected $fillable = ['name', 'type', 'degree_id'];
+    protected $fillable = ['name', 'type'/*, 'degree_id'*/];
 
     const UPDATE_RULES = [
         'id' => 'required'
@@ -19,13 +19,13 @@ class Field extends Model
 
     const STORE_RULES = [
         'name' => 'required',
-        'type' => 'required',
-        'degree_id' => 'required'
+        'type' => 'required'
+        //'degree_id' => 'required'
     ];
 
-    public function degree() {
-        return $this->belongsTo(Degree::class);
-    }
+//    public function degree() {
+//        return $this->belongsTo(Degree::class);
+//    }
 
     public function subjects() {
         return $this->hasMany(Subject::class);
