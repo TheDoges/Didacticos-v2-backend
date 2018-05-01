@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources\Subject;
 
-use App\Http\Requests\Field\FieldRequest;
 use App\Http\Resources\Degree\DegreeResource;
+use App\Http\Resources\Field\FieldResource;
 use App\Http\Resources\Semester\SemesterResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
