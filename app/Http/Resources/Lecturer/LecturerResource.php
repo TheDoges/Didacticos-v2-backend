@@ -18,7 +18,7 @@ class LecturerResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'surname' => $this->surname,
-            'title' => $this->title->name
+            'title' => $this->title
         ];
     }
 }
