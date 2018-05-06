@@ -24,6 +24,6 @@ class Lecturer extends Model
     ];
 
     public function title() {
-        return $this->belongsTo(Title::class)->first();
+        return $this->belongsTo(Title::class);
     }
 }
