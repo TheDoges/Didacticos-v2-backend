@@ -17,7 +17,8 @@ class CreateLecturersTable extends Migration
             $table->increments('id');
             $table->string("name");
             $table->string("surname");
-            $table->string("title_id");
+            $table->integer('title_id')->unsigned()->index();
+            $table->foreign('title_id')->references('id')->on('titles')->onDelete('cascade');
             $table->timestamps();
         });
     }
