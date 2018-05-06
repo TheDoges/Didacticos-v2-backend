@@ -9,6 +9,7 @@ use App\Utils\Controller\ControllerHelper;
 use App\Utils\Response\ResponseMessages;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\Lecturer\LecturerRequest;
 
 class LecturerController extends Controller
 {
