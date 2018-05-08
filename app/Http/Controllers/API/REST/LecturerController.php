@@ -7,9 +7,13 @@ use App\Http\Resources\Lecturer\LecturerResource;
 use App\Models\Lecturer;
 use App\Utils\Controller\ControllerHelper;
 use App\Utils\Response\ResponseMessages;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Lecturer\LecturerRequest;
+use App\Http\Resources\Subject\SubjectResource;
+use App\Http\Requests\Subject\SubjectRequest;
+use App\Models\Subject;
+use Validator;
+use Symfony\Component\HttpFoundation\Request;
 
 class LecturerController extends Controller
 {
@@ -110,5 +114,37 @@ class LecturerController extends Controller
         //
         $response = $this->deleteSelectedModels($request->all(), Lecturer::class);
         return $this->prepareLoginSuccessResponse($response, ResponseMessages::OPERATION_SUCCESSFUL);
+    }
+
+    /* RELATIONS WITH SUBJECT */
+    //-------------------------
+    public function getSubjects(Lecturer $lecturer) {
+        return SubjectResource::collection($lecturer->subjects);
+    }
+
+    public function storeSubject(Lecturer $lecturer, Request $request) {
+        $message = null;
+        $data = null;
+        $v = Validator::make($request->all(), Subject::UPDATE_RULES);
+        if($v->fails()) {
+            $data = $v->errors();
+            $message = ResponseMessages::OPERATION_FAILED;
+        } else {
+            $lecturer->subjects()->attach($request['id']);
+            $data = Subject::find($request['id']);
+            $message = ResponseMessages::OPERATION_SUCCESSFUL;
+        }
+
+        return $this->prepareJsonMessage($message, $data);
+    }
+
+    
+
+    public function updateSubject(Lecturer $lecturer, SubjectRequest $sRequest) {
+        // $subject = $lecturer->
+        // unset($sRequest['id']);
+        // $isUpdated = $this->updateDataInModel($sRequest->all(), $subject);
+        // $message = $isUpdated ? new SubjectResource($subject) : ResponseMessages::NOTHING_TO_UPDATE;
+        // return $this->prepareJsonSuccessResponse($message, Response::HTTP_OK);
     }
 }

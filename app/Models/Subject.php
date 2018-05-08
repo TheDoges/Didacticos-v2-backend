@@ -38,4 +38,8 @@ class Subject extends Model
     public function degree() {
         return $this->belongsTo(Degree::class);
     }
+
+    public function lecturers() {
+        return $this->belongsToMany(Lecturer::class)->using(LecturerSubject::class);
+    }
 }

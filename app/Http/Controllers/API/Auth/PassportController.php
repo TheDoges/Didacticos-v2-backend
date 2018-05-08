@@ -33,6 +33,16 @@ class PassportController extends Controller
 
     }
 
+    public function logout()
+    {
+        if (Auth::guard('api')->check()) {
+            Auth::guard('api')->user()->oAuthAcessTokens()->delete();
+            return $this->prepareJsonSuccessResponse(ResponseMessages::OPERATION_SUCCESSFUL, Response::HTTP_OK);
+        } else {
+            return $this->prepareJsonErrorResponse(ResponseMessages::UNAUTHORISED, Response::HTTP_OK);
+        }
+    }
+
     /**
      * Register user via api
      *

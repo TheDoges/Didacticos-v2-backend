@@ -26,4 +26,8 @@ class Lecturer extends Model
     public function title() {
         return $this->belongsTo(Title::class);
     }
+
+    public function subjects() {
+        return $this->belongsToMany(Subject::class)->using(LecturerSubject::class);
+    }
 }

@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', 'API\Auth\PassportController@login')->name('passport.login');
 Route::post('/register', 'API\Auth\PassportController@register')->name('passport.register');
+Route::post('/logout', 'API\Auth\PassportController@logout')->name('passport.logout');
 
 // *****************************DEGREE*************************************
 Route::apiResource('/degree', 'API\REST\DegreeController');
@@ -40,6 +41,12 @@ Route::delete('/fields', 'API\REST\FieldController@deleteAll')->name('lecturer.d
 Route::apiResource('/lecturer', 'API\REST\LecturerController');
 Route::post('/lecturers', 'API\REST\LecturerController@storeAll')->name('lecturer.storeALl');
 Route::delete('/lecturers', 'API\REST\LecturerController@deleteAll')->name('lecturer.deleteAll');
+
+Route::apiResource('lecturer-subject', 'API\REST\LecturerSubjectController');
+// Route::group(['prefix' => '/lecturer/{lecturer}'], function() {
+//    Route::get('/subject', 'API\REST\LecturerController@getSubjects')->name('subject.lecturer.getSubjects');
+//    Route::post('/subject', 'API\REST\LecturerController@storeSubject')->name('subject.lecturer.storeSubject');
+// });
 
 // *****************************SEMESTER***********************************
 Route::apiResource('/semester', 'API\REST\SemesterController');
