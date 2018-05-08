@@ -17,10 +17,10 @@ class CreateLecturerSubjectsTable extends Migration
             $table->increments('id');
             $table->integer('hours');
             $table->integer('lecturer_id')->unsigned()->index();
-            $table->foreign('lecturer_id')->references('id')->on('lecturers');
+            $table->foreign('lecturer_id')->references('id')->on('lecturers')->onDelete('cascade');
 
             $table->integer('subject_id')->unsigned()->index();
-            $table->foreign('subject_id')->references('id')->on('subjects');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $table->timestamps();
         });
     }
