@@ -84,7 +84,7 @@ class LecturerSubjectController extends Controller
      * @param  \App\Models\LecturerSubject  $lecturerSubject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LecturerSubjectRequest $lecturerSubject)
+    public function destroy(LecturerSubjectRequest $lsRequest, LecturerSubject $lecturerSubject)
     {
         //
         $message = ResponseMessages::MODEL_NOT_FOUND;
