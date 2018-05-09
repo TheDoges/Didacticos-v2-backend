@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
 use App\Utils\HTTP\HTTPMethods;
+use Illuminate\Database\Eloquent\Model;
 
-class LecturerSubject extends Pivot
+class LecturerSubject extends Model
 {
+    const TABLE_NAME = 'lecturer_subjects';
     const ID = 'id';
     const LECTURER_ID = 'lecturer_id';
     const SUBJECT_ID = 'subject_id';
     const HOURS = 'hours';
     //
 
+    protected $table = LecturerSubject::TABLE_NAME;
     protected $fillable = [LecturerSubject::LECTURER_ID, LecturerSubject::SUBJECT_ID, LecturerSubject::HOURS];
     
     const STORE_RULES = [

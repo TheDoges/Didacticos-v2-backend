@@ -28,6 +28,6 @@ class Lecturer extends Model
     }
 
     public function subjects() {
-        return $this->belongsToMany(Subject::class)->using(LecturerSubject::class);
+        return $this->belongsToMany(Subject::class, LecturerSubject::TABLE_NAME);
     }
 }

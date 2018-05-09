@@ -13,7 +13,7 @@ class CreateLecturerSubjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lecturer_subject', function (Blueprint $table) {
+        Schema::create('lecturer_subjects', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('hours');
             $table->integer('lecturer_id')->unsigned()->index();
@@ -32,6 +32,6 @@ class CreateLecturerSubjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lecturer_subject');
+        Schema::dropIfExists('lecturer_subjects');
     }
 }
