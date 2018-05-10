@@ -28,7 +28,7 @@ class LecturerSubjectRequest extends FormRequest implements IFormRequest
      */
     public function rules(Request $request)
     {
-        return LecturerSubject::RULES[$request->method()];
+        return LecturerSubject::REQUEST_RULES[$request->method()];
     }
 
     public function getRulesByRequestMethods($method)

@@ -11,6 +11,8 @@ use App\Models\Lecturer;
 use App\Utils\Controller\ControllerHelper;
 use Symfony\Component\HttpFoundation\Response;
 use App\Utils\Response\ResponseMessages;
+use App\Models\Subject;
+use Validator;
 
 class LecturerSubjectController extends Controller
 {
@@ -28,7 +30,7 @@ class LecturerSubjectController extends Controller
     public function index()
     {
         //
-        return LecturerSubjectResource::collection(LecturerSubject::all());
+        return $this->prepareJsonSuccessResponse(LecturerSubjectResource::collection(LecturerSubject::all()), Response::HTTP_OK);
     }
 
     /**
@@ -56,7 +58,11 @@ class LecturerSubjectController extends Controller
     public function show(LecturerSubject $lecturerSubject)
     {
         //
-        return new LecturerSubjectResource($lecturerSubject);
+        if($lecturerSubject != null) {
+            return $this->prepareJsonSuccessResponse(new LecturerSubjectResource($lecturerSubject), Response::HTTP_OK);
+        } else {
+            return $this->prepareJsonErrorResponse(ResponseMessages::MODEL_NOT_FOUND, Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -68,14 +74,13 @@ class LecturerSubjectController extends Controller
      */
     public function update(LecturerSubjectRequest $lsRequest, LecturerSubject $lecturerSubject)
     {
-        //
-        $message = ResponseMessages::MODEL_NOT_FOUND;
-        $lecturerSubject = LecturerSubject::find($lsRequest[LecturerSubject::ID]);
         if($lecturerSubject != null) {
-            $isUpdated = $this->updateDataInModel($lsRequest->all(), $lecturerSubject);
-            $message = $isUpdated ? new LecturerSubjectResource($lecturerSubject) : ResponseMessages::NOTHING_TO_UPDATE;
+            $lecturerSubject->fill($lsRequest->all());
+            $lecturerSubject->save();
+            return $this->prepareJsonSuccessResponse(new LecturerSubjectResource($lecturerSubject), Response::HTTP_OK);
+        } else {
+            return $this->prepareJsonErrorResponse(ResponseMessages::MODEL_NOT_FOUND, Response::HTTP_BAD_REQUEST);
         }
-        return $this->prepareJsonSuccessResponse($message, Response::HTTP_OK);
     }
 
     /**
@@ -84,16 +89,50 @@ class LecturerSubjectController extends Controller
      * @param  \App\Models\LecturerSubject  $lecturerSubject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LecturerSubjectRequest $lsRequest, LecturerSubject $lecturerSubject)
+    public function destroy(Request $lsRequest, LecturerSubject $lecturerSubject)
     {
-        //
         $message = ResponseMessages::MODEL_NOT_FOUND;
-        $lecturerSubject = LecturerSubject::find($lecturerSubject[LecturerSubject::ID]);
         if($lecturerSubject != null) {
             $lecturerSubject->delete();
-            $message = ResponseMessages::OPERATION_SUCCESSFUL;
+            return $this->prepareJsonSuccessResponse(ResponseMessages::OPERATION_SUCCESSFUL, Response::HTTP_OK);
+        } else {
+            return $this->prepareJsonErrorResponse(ResponseMessages::MODEL_NOT_FOUND, Response::HTTP_BAD_REQUEST);
         }
 
-        return $this->prepareJsonSuccessResponse($message, Response::HTTP_OK);
+        
+    }
+
+    public function getLecturerSubjectBySemester(Request $request) {
+        $v = Validator::make($request->all(), LecturerSubject::GET_ALL_BY_SEMESTER_RULES);
+        if($v->fails()) {
+            return $this->prepareJsonErrorResponse($v->errors(), Response::HTTP_BAD_REQUEST);
+        }
+        $associativeArrayOfSubjectsById = $this->getAssociativeArrayOfModelById(Subject::class);
+        $allLecturerSubject = LecturerSubject::all();
+        $associativeArrayOfLecturerSubjectBySemesterId = $this->getAssociativeArrayOfLecturerSubjectBySemesterId($allLecturerSubject, $associativeArrayOfSubjectsById);
+        if(!isset($associativeArrayOfLecturerSubjectBySemesterId[$request[SUBJECT::SEMESTER_ID]])) {
+            return $this->prepareJsonErrorResponse(ResponseMessages::OPERATION_FAILED, Response::HTTP_BAD_REQUEST);
+        }
+        return $this->prepareJsonSuccessResponse($associativeArrayOfLecturerSubjectBySemesterId[$request[SUBJECT::SEMESTER_ID]], Response::HTTP_OK);
+
+    }
+
+    private function getAssociativeArrayOfModelById($modelClass) {
+        $array = [];
+        $allModels = $modelClass::all();
+        foreach($allModels as $model) {
+            $array[$model[$modelClass::ID]] = $model;
+        }
+        return $array; 
+    }
+
+    private function getAssociativeArrayOfLecturerSubjectBySemesterId($lecturerSubject, $subjectsArray) {
+        $array = [];
+        foreach($lecturerSubject as $ls) {
+            $semesterId = $subjectsArray[$ls[LecturerSubject::SUBJECT_ID]][Subject::SEMESTER_ID];
+            $array[$semesterId] = isset($array[$semesterId]) ? $array[$semesterId] : [];
+            array_push($array[$semesterId], $ls);
+        }
+        return $array;
     }
 }

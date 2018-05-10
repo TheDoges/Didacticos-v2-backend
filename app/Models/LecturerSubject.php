@@ -15,7 +15,7 @@ class LecturerSubject extends Model
     //
 
     protected $table = LecturerSubject::TABLE_NAME;
-    protected $fillable = [LecturerSubject::LECTURER_ID, LecturerSubject::SUBJECT_ID, LecturerSubject::HOURS];
+    protected $fillable = [LecturerSubject::SUBJECT_ID, LecturerSubject::HOURS, LecturerSubject::LECTURER_ID];
     
     const STORE_RULES = [
         LecturerSubject::LECTURER_ID => 'required',
@@ -32,7 +32,11 @@ class LecturerSubject extends Model
         LecturerSubject::ID => 'required'
     ];
 
-    const RULES = [
+    const GET_ALL_BY_SEMESTER_RULES = [
+        Subject::SEMESTER_ID => 'required'
+    ];
+
+    const REQUEST_RULES = [
         HTTPMethods::POST => LecturerSubject::STORE_RULES,
         HTTPMethods::PUT => LecturerSubject::UPDATE_RULES,
         HTTPMethods::DELETE => LecturerSubject::DELETE_RULES

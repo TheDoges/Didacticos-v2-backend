@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
 {
+    const ID = 'id';
+    const SEMESTER_ID = 'semester_id';
+    
     //
     protected $fillable = ['name', 'type', 'hours', 'field_id', 'semester_id', 'degree_id', 'semester_number'];
 
