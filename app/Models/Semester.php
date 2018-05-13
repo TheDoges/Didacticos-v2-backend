@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Semester extends Model
 {
     //
-    protected $fillable = ['name', 'year'];
+    const ID = 'id';
+    const NAME = 'name';
+    const YEAR = 'year';
+
+    protected $fillable = [Semester::ID, Semester::NAME, Semester::YEAR];
 
     const STORE_RULES = [
         'name' => 'required',
@@ -21,6 +25,8 @@ class Semester extends Model
     const DELETE_RULES = [
         'id' => 'required'
     ];
+
+    const COPY_SEMESTER_RULES = Semester::STORE_RULES + Semester::DELETE_RULES;
 
     public function subjects() {
         return $this->hasMany(Subject::class);

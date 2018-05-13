@@ -41,4 +41,41 @@ class LecturerSubject extends Model
         HTTPMethods::PUT => LecturerSubject::UPDATE_RULES,
         HTTPMethods::DELETE => LecturerSubject::DELETE_RULES
     ];
+
+    public static function getLecturerSubjectBySemesterId($semesterId) {
+        $associativeArrayOfSubjectsById = LecturerSubject::getAssociativeArrayOfModelById(Subject::class);
+        $allLecturerSubject = LecturerSubject::all();
+        $associativeArrayOfLecturerSubjectBySemesterId = LecturerSubject::getAssociativeArrayOfLecturerSubjectBySemesterId($allLecturerSubject, $associativeArrayOfSubjectsById);
+        if(!isset($associativeArrayOfLecturerSubjectBySemesterId[$semesterId])) {
+            return [];
+        }
+        return $associativeArrayOfLecturerSubjectBySemesterId[$semesterId];
+    }
+
+    public static function getAssociativeArrayOfModelById($modelClass) {
+        $array = [];
+        $allModels = $modelClass::all();
+        foreach($allModels as $model) {
+            $array[$model[$modelClass::ID]] = $model;
+        }
+        return $array; 
+    }
+
+    public static function getAssociativeArrayOfLecturerSubjectBySemesterId($lecturerSubject, $subjectsArray) {
+        $array = [];
+        foreach($lecturerSubject as $ls) {
+            $semesterId = $subjectsArray[$ls[LecturerSubject::SUBJECT_ID]][Subject::SEMESTER_ID];
+            $array[$semesterId] = isset($array[$semesterId]) ? $array[$semesterId] : [];
+            array_push($array[$semesterId], $ls);
+        }
+        return $array;
+    }
+
+    public function replicateLecturerSubjectWithNewSubjectId($subjectId) {
+        $new = $this->replicate();
+        $new[LecturerSubject::SUBJECT_ID] = $subjectId;
+        $new->save();
+        return $new;
+    }
+
 }

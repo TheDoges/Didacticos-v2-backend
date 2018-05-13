@@ -45,4 +45,12 @@ class Subject extends Model
     public function lecturers() {
         return $this->belongsToMany(Lecturer::class, LecturerSubject::TABLE_NAME);
     }
+
+    public function replicateToSemester($semesterId) {
+        $new =  $this->replicate();
+        $new[Subject::SEMESTER_ID] = $semesterId;
+        $new->save();
+        return $new;
+
+    }
 }

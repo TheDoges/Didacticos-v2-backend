@@ -107,32 +107,7 @@ class LecturerSubjectController extends Controller
         if($v->fails()) {
             return $this->prepareJsonErrorResponse($v->errors(), Response::HTTP_BAD_REQUEST);
         }
-        $associativeArrayOfSubjectsById = $this->getAssociativeArrayOfModelById(Subject::class);
-        $allLecturerSubject = LecturerSubject::all();
-        $associativeArrayOfLecturerSubjectBySemesterId = $this->getAssociativeArrayOfLecturerSubjectBySemesterId($allLecturerSubject, $associativeArrayOfSubjectsById);
-        if(!isset($associativeArrayOfLecturerSubjectBySemesterId[$request[SUBJECT::SEMESTER_ID]])) {
-            return $this->prepareJsonErrorResponse(ResponseMessages::OPERATION_FAILED, Response::HTTP_BAD_REQUEST);
-        }
-        return $this->prepareJsonSuccessResponse($associativeArrayOfLecturerSubjectBySemesterId[$request[SUBJECT::SEMESTER_ID]], Response::HTTP_OK);
+        return $this->prepareJsonSuccessResponse(LecturerSubject::getLecturerSubjectBySemesterId($request[SUBJECT::SEMESTER_ID]), Response::HTTP_OK);
 
-    }
-
-    private function getAssociativeArrayOfModelById($modelClass) {
-        $array = [];
-        $allModels = $modelClass::all();
-        foreach($allModels as $model) {
-            $array[$model[$modelClass::ID]] = $model;
-        }
-        return $array; 
-    }
-
-    private function getAssociativeArrayOfLecturerSubjectBySemesterId($lecturerSubject, $subjectsArray) {
-        $array = [];
-        foreach($lecturerSubject as $ls) {
-            $semesterId = $subjectsArray[$ls[LecturerSubject::SUBJECT_ID]][Subject::SEMESTER_ID];
-            $array[$semesterId] = isset($array[$semesterId]) ? $array[$semesterId] : [];
-            array_push($array[$semesterId], $ls);
-        }
-        return $array;
     }
 }

@@ -10,6 +10,9 @@ use App\Utils\Controller\ControllerHelper;
 use App\Utils\Response\ResponseMessages;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Validator;
+use App\Models\LecturerSubject;
+use App\Models\Subject;
 
 class SemesterController extends Controller
 {
@@ -110,5 +113,35 @@ class SemesterController extends Controller
         //
         $response = $this->deleteSelectedModels($request->all(), Semester::class);
         return $this->prepareLoginSuccessResponse($response, ResponseMessages::OPERATION_SUCCESSFUL);
+    }
+
+    public function copySemesterById(Request $request) {
+        $v = Validator::make($request->all(), Semester::COPY_SEMESTER_RULES);
+        if($v->fails()) {
+            return $this->prepareJsonErrorResponse($v->errors(), Response::HTTP_BAD_REQUEST);
+        }
+        $semester = Semester::find($request[Semester::ID]);
+        if($semester != null) {
+            $subjects = $semester->subjects;
+            $newSemester = $semester->replicate();
+            $newSemester[Semester::NAME] = $request[Semester::NAME];
+            $newSemester[Semester::YEAR] = $request[Semester::YEAR];
+            $newSemester->save();
+            $subjectsIdRelations = [];
+            foreach($subjects as $key => $subject) {
+                $newSubject = $subject->replicateToSemester($newSemester[Semester::ID]);
+                $subjectsIdRelations[$subject[Subject::ID]] = $newSubject[Subject::ID];
+            }
+            $lecturerSubjects = LecturerSubject::getLecturerSubjectBySemesterId($semester[Semester::ID]);
+            $newls = [];
+            foreach($lecturerSubjects as $key => $lecturerSubject) {
+                if(isset($subjectsIdRelations[$lecturerSubject[LecturerSubject::SUBJECT_ID]])){
+                    $newls[$key] = $lecturerSubject->replicateLecturerSubjectWithNewSubjectId($subjectsIdRelations[$lecturerSubject[LecturerSubject::SUBJECT_ID]]);
+                }
+            }
+
+            return $this->prepareJsonSuccessResponse($newSemester[Semester::ID], Response::HTTP_OK);
+        }
+        return $this->prepareJsonErrorResponse(ResponseMessages::MODEL_NOT_FOUND, Response::HTTP_BAD_REQUEST);
     }
 }

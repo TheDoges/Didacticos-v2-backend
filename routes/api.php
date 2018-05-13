@@ -53,6 +53,7 @@ Route::post('lecturer-subject/semester', 'API\REST\LecturerSubjectController@get
 Route::apiResource('/semester', 'API\REST\SemesterController');
 Route::post('/semesters', 'API\REST\SemesterController@storeAll')->name('semester.storeAll');
 Route::delete('/semesters', 'API\REST\SemesterController@deleteAll')->name('semester.deleteAll');
+Route::post('/semester/copy', 'API\REST\SemesterController@copySemesterById')->name('semester.copySemesterById');
 
 // *****************************SUBJECT************************************
 Route::apiResource('/subject', 'API\REST\SubjectController');
