@@ -43,7 +43,7 @@ Route::post('/lecturers', 'API\REST\LecturerController@storeAll')->name('lecture
 Route::delete('/lecturers', 'API\REST\LecturerController@deleteAll')->name('lecturer.deleteAll');
 
 Route::apiResource('lecturer-subject', 'API\REST\LecturerSubjectController');
-Route::post('lecturer-subject/semester', 'API\REST\LecturerSubjectController@getLecturerSubjectBySemester');
+Route::get('/semester/{semester}/lecturer-subject', 'API\REST\LecturerSubjectController@getLecturerSubjectBySemester');
 // Route::group(['prefix' => '/lecturer/{lecturer}'], function() {
 //    Route::get('/subject', 'API\REST\LecturerController@getSubjects')->name('subject.lecturer.getSubjects');
 //    Route::post('/subject', 'API\REST\LecturerController@storeSubject')->name('subject.lecturer.storeSubject');

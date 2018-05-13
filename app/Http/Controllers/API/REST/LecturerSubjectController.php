@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Utils\Response\ResponseMessages;
 use App\Models\Subject;
 use Validator;
+use App\Models\Semester;
 
 class LecturerSubjectController extends Controller
 {
@@ -98,16 +99,13 @@ class LecturerSubjectController extends Controller
         } else {
             return $this->prepareJsonErrorResponse(ResponseMessages::MODEL_NOT_FOUND, Response::HTTP_BAD_REQUEST);
         }
-
-        
     }
 
-    public function getLecturerSubjectBySemester(Request $request) {
-        $v = Validator::make($request->all(), LecturerSubject::GET_ALL_BY_SEMESTER_RULES);
-        if($v->fails()) {
-            return $this->prepareJsonErrorResponse($v->errors(), Response::HTTP_BAD_REQUEST);
+    public function getLecturerSubjectBySemester(Semester $semester) {
+        if($semester != null) {
+            return $this->prepareJsonSuccessResponse(LecturerSubject::getLecturerSubjectBySemesterId($semester[Semester::ID]), Response::HTTP_OK);
+        } else {
+            return $this->prepareJsonErrorResponse(ResponseMessages::MODEL_NOT_FOUND, Response::HTTP_BAD_REQUEST);
         }
-        return $this->prepareJsonSuccessResponse(LecturerSubject::getLecturerSubjectBySemesterId($request[SUBJECT::SEMESTER_ID]), Response::HTTP_OK);
-
     }
 }
