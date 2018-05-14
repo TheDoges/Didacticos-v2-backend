@@ -140,7 +140,7 @@ class SemesterController extends Controller
                 }
             }
 
-            return $this->prepareJsonSuccessResponse($newSemester[Semester::ID], Response::HTTP_OK);
+            return $this->prepareJsonSuccessResponse(new SemesterResource($newSemester), Response::HTTP_OK);
         }
         return $this->prepareJsonErrorResponse(ResponseMessages::MODEL_NOT_FOUND, Response::HTTP_BAD_REQUEST);
     }
