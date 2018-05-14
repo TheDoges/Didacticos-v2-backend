@@ -26,7 +26,9 @@ class Semester extends Model
         'id' => 'required'
     ];
 
-    const COPY_SEMESTER_RULES = Semester::STORE_RULES + Semester::DELETE_RULES;
+    const COPY_SEMESTER_RULES = Semester::STORE_RULES + [
+        'template_id' => 'required'
+    ];
 
     public function subjects() {
         return $this->hasMany(Subject::class);

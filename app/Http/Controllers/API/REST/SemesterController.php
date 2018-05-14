@@ -120,7 +120,7 @@ class SemesterController extends Controller
         if($v->fails()) {
             return $this->prepareJsonErrorResponse($v->errors(), Response::HTTP_BAD_REQUEST);
         }
-        $semester = Semester::find($request[Semester::ID]);
+        $semester = Semester::find($request['template_id']);
         if($semester != null) {
             $subjects = $semester->subjects;
             $newSemester = $semester->replicate();
