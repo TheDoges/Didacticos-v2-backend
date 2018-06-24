@@ -79,7 +79,6 @@ div.lecturer-content table:last-child {
     page-break-inside:avoid;
 }
         </style>
-        <link rel="stylesheet" href="/pdfView.css">
     </head>
         <body>
             @yield('content')
