@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::post('/login', 'API\Auth\PassportController@login')->name('passport.login');
 Route::post('/register', 'API\Auth\PassportController@register')->name('passport.register');
@@ -54,6 +54,7 @@ Route::apiResource('/semester', 'API\REST\SemesterController');
 Route::post('/semesters', 'API\REST\SemesterController@storeAll')->name('semester.storeAll');
 Route::delete('/semesters', 'API\REST\SemesterController@deleteAll')->name('semester.deleteAll');
 Route::post('/semester/copy', 'API\REST\SemesterController@copySemesterById')->name('semester.copySemesterById');
+Route::get('/semester/{semester}/pdf-view', 'API\REST\Semester\AttachmentController@index')->name('attachment.pdfView');
 
 // *****************************SUBJECT************************************
 Route::apiResource('/subject', 'API\REST\SubjectController');

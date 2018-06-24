@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Degree extends Model
 {
     //
+    const PREFIX = 'prefix';
     protected $fillable = ['name', 'prefix', 'alias', 'number'];
 
     const STORE_RULES = [

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Field extends Model
 {
     //
+    const TYPE = 'type';
+    const NAME = 'name';
     protected $fillable = ['name', 'type'/*, 'degree_id'*/];
 
     const UPDATE_RULES = [

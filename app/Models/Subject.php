@@ -8,26 +8,40 @@ class Subject extends Model
 {
     const ID = 'id';
     const SEMESTER_ID = 'semester_id';
+    const TYPE = 'type';
+    const NAME ='name';
+    const DEGREE_ID = 'degree_id';
+    const FIELD_ID = 'field_Id';
+    const HOURS = 'hours';
+    const SEMESTER_NUMBER = 'semester_number';
+
+    const TYPE_ALIASES = [
+        'lec' => 'Wykłady',
+        'lab' => 'Labolatoria',
+        'exe' => 'Ćwiczenia',
+        'pro' => 'Projekty',
+        'sem' => 'Seminaria'
+    ];
     
     //
-    protected $fillable = ['name', 'type', 'hours', 'field_id', 'semester_id', 'degree_id', 'semester_number'];
+    protected $fillable = [Subject::NAME, Subject::TYPE, Subject::HOURS, Subject::FIELD_ID, Subject::SEMESTER_ID, Subject::DEGREE_ID, Subject::SEMESTER_NUMBER];
 
     const STORE_RULES = [
-        'name' => 'required',
-        'type' => 'required',
-        'hours' => 'required',
-        'field_id' => 'required',
-        'semester_id' => 'required',
-        'semester_number' => 'required',
-        'degree_id' => 'required'
+        Subject::NAME => 'required',
+        Subject::TYPE => 'required',
+        Subject::HOURS => 'required',
+        Subject::FIELD_ID => 'required',
+        Subject::SEMESTER_ID => 'required',
+        Subject::DEGREE_ID => 'required',
+        Subject::SEMESTER_NUMBER => 'required'
     ];
 
     const UPDATE_RULES = [
-        'id' => 'required'
+        Subject::ID => 'required'
     ];
 
     const DELETE_RULES = [
-        'id' => 'required'
+        Subject::ID => 'required'
     ];
 
     public function field() {

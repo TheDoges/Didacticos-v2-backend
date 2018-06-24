@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Title extends Model
 {
     //
+    const NAME = 'name';
+    
     protected $fillable = [
         'name',
         'short_name',

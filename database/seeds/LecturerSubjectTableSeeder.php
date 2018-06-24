@@ -21,6 +21,12 @@ class LecturerSubjectTableSeeder extends Seeder
 
         $lecturerSubject = new LecturerSubject();
         $lecturerSubject->lecturer_id = 1;
+        $lecturerSubject->subject_id = 5;
+        $lecturerSubject->hours = 15;
+        $lecturerSubject->save();
+
+        $lecturerSubject = new LecturerSubject();
+        $lecturerSubject->lecturer_id = 1;
         $lecturerSubject->subject_id = 3;
         $lecturerSubject->hours = 20;
         $lecturerSubject->save();

@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Lecturer extends Model
 {
     //
-    protected $fillable = ['name', 'surname', 'title_id'];
+    const NAME = 'name';
+    const SURNAME = 'surname';
+    const TITLE_ID = 'title_id';
+
+    protected $fillable = [Lecturer::NAME, Lecturer::SURNAME, Lecturer::TITLE_ID];
 
     const STORE_RULES = [
         'name' => 'required',
