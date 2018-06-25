@@ -1806,7 +1806,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var API_PATH = 'http://127.0.0.1:8000/api/';
+var API_PATH = 'http://localhost:8000/api/';
 var ApiService = (function () {
     function ApiService(http, credentialService, snackBar, loadingService) {
         this.http = http;
