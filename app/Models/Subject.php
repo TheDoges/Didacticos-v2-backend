@@ -11,7 +11,7 @@ class Subject extends Model
     const TYPE = 'type';
     const NAME ='name';
     const DEGREE_ID = 'degree_id';
-    const FIELD_ID = 'field_Id';
+    const FIELD_ID = 'field_id';
     const HOURS = 'hours';
     const SEMESTER_NUMBER = 'semester_number';
 

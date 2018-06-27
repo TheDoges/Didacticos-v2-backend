@@ -33,7 +33,7 @@ class AttachmentController extends Controller
         $data = $this->createDataForPDF($dataFromIds, $lecturerIds);
 
         $pdf = PDF::loadView('API/REST/Semester/pdfView', compact('data'));
-        return $pdf->stream('pdfView.pdf');
+        return $pdf->stream('Obciazenia.pdf');
     }
 
     private function getUniqueLecturersIdWithSubjects($links) {

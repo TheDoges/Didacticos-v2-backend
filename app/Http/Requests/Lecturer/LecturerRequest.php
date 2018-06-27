@@ -6,6 +6,7 @@ use App\Http\Requests\Interfaces\IFormRequest;
 use App\Models\Lecturer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use App\Utils\HTTP\HTTPMethods;
 
 class LecturerRequest extends FormRequest implements IFormRequest
 {
